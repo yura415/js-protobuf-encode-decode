@@ -1,0 +1,20 @@
+{
+  "name": "js-protobuf-encode-decode",
+  "version": "0.0.1",
+  "authors": [
+    "Georgy Chirkov <mail@gich.co>"
+  ],
+  "main": "index.html",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "protobuf": "~3.8.2",
+    "normalize.css": "~3.0.2"
+  }
+}

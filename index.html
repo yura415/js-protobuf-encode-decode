@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>Online Protobuf encoder/decoder</title>
+    <link rel="stylesheet" href="bower_components/normalize.css/normalize.css"/>
+    <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<header></header>
+<section>
+    <div>
+        <label>
+            Enter HEX representation of bytes here.
+            <textarea id="encoded"><08 96 01></textarea>
+        </label>
+    </div>
+    <div>
+        <label>
+            Decoded buffer.
+            <textarea id="decoded"></textarea>
+        </label>
+    </div>
+</section>
+<section>
+    <div class="full">
+        <label>
+            Paste your .proto file here. By now it supports only one message type.
+            <textarea id="proto">message Test1 {
+  required int32 a = 1;
+}</textarea>
+        </label>
+    </div>
+</section>
+<script src="bower_components/bytebuffer/dist/ByteBufferAB.min.js"></script>
+<script src="bower_components/long/dist/Long.min.js"></script>
+<script src="bower_components/protobuf/dist/ProtoBuf.min.js"></script>
+<script src="js/frontend.js"></script>
+</body>
+</html>

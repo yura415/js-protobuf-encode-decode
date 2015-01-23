@@ -1,0 +1,26 @@
+section {
+    width: 100%;
+}
+
+section div {
+    width: 44%;
+    float: left;
+    height: 500px;
+    background: #cccccc;
+    border-radius: 5px;
+    margin: 2%;
+    padding: 1%;
+}
+
+label {
+}
+
+textarea {
+    display: block;
+    height: 90%;
+    width: 100%;
+}
+
+.full {
+    width: 94%;
+}
