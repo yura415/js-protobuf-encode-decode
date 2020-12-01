@@ -3,7 +3,7 @@
     var encoded = document.getElementById("encoded")
         , decoded = document.getElementById("decoded")
         , proto = document.getElementById("proto")
-        , protoType;
+        , protoRoot;
 
     encoded.addEventListener("keyup", function () {
         decode();
@@ -17,26 +17,42 @@
         updateProto();
     });
 
+    function toUint8Array(hexString) {
+        return new Uint8Array(hexString.match(/\w{2}/g).map(function(byte) {
+            return parseInt(byte, 16);
+        }));
+    }
+
+    function fromUint8Array(buffer) {
+        var first = true
+        return buffer.reduce(function(str, byte) {
+            var space = first ? '' : ' ';
+            first = false;
+            return str + space + byte.toString(16).padStart(2, '0').toUpperCase();
+        }, '');
+    }
+
     function decode() {
         decoded.value = "";
         try {
             if (!encoded.value) return;
-            var buffer = dcodeIO.ByteBuffer.fromDebug(encoded.value);
-            var decodedObject = protoType.decode(buffer);
-            decoded.value = JSON.stringify(decodedObject, null, 2);
+            var payload = toUint8Array(encoded.value);
+            var message = protoRoot.root.nestedArray[0];
+
+            decoded.value = JSON.stringify(message.decode(payload), null, 2);
         } catch (e) {
             decoded.value = "Error:\n" + e.toString();
+            console.error(e.toString());
         }
     }
 
     function updateProto() {
         try {
-            var loadedProto = dcodeIO.ProtoBuf.loadProto(proto.value);
-            protoType = loadedProto.build();
-            protoType = protoType[Object.keys(protoType)[0]];
+            protoRoot = protobuf.parse(proto.value);
             decode();
         } catch (e) {
             decoded.value = "Error:\n" + e.toString();
+            console.error(e.toString());
         }
     }
 
@@ -44,13 +60,17 @@
         encoded.value = "";
         try {
             if (!decoded.value) return;
-            var protoObject = new protoType(JSON.parse(decoded.value));
-            var encodedBuffer = protoObject
-                .encode();
-            encoded.value = encodedBuffer.toDebug();
+            var message = protoRoot.root.nestedArray[0];
+            var payload = JSON.parse(decoded.value);
+
+            var err = message.verify(payload);
+            if (err) throw err;
+
+            var buffer = message.encode(payload).finish()
+            encoded.value = '<' + fromUint8Array(buffer) + '>';
         } catch (e) {
             encoded.value = "Error:\n" + e.toString();
-            throw e;
+            console.error(e.toString());
         }
     }
 
