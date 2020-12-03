@@ -42,7 +42,7 @@
             decoded.value = JSON.stringify(message.decode(payload), null, 2);
         } catch (e) {
             decoded.value = "Error:\n" + e.toString();
-            console.error(e.toString());
+            console.error(e);
         }
     }
 
@@ -52,7 +52,7 @@
             decode();
         } catch (e) {
             decoded.value = "Error:\n" + e.toString();
-            console.error(e.toString());
+            console.error(e);
         }
     }
 
@@ -70,7 +70,7 @@
             encoded.value = '<' + fromUint8Array(buffer) + '>';
         } catch (e) {
             encoded.value = "Error:\n" + e.toString();
-            console.error(e.toString());
+            console.error(e);
         }
     }
 
