@@ -49,7 +49,6 @@
     function updateProto() {
         try {
             protoRoot = protobuf.parse(proto.value);
-            decode();
         } catch (e) {
             decoded.value = "Error:\n" + e.toString();
             console.error(e);
